@@ -1,3 +1,4 @@
+import { transform } from "next/dist/build/swc";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -8,10 +9,67 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        grey: "#fffc",
+        yellow: "#cbfe00",
+        "off-black": "#0f0f0f",
+      },
+
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-yellow": "linear-gradient(180deg, #cbfe00 4%, #fbe700 96%);",
+        "gradient-silver":
+          "linear-gradient(to right, #dbdbdb, #f9f9f9, #dbdbdb);",
+        "gradient-transparent":
+          "linear-gradient(to right, transparent, transparent, transparent);",
+        "yello-circle":
+          'url("../assets/images/home-page/hero-section/yellow-circle.svg")',
+        "gray-grid":
+          'url("../assets/images/home-page/hero-section/gray-grid.svg")',
+      },
+
+      fontFamily: {
+        poppins: ["var(--font-poppins)"],
+        "techno-chain": ["var(--font-techno-chain)"],
+        "tt-firs-neue": ["var(--font-tt-firs-neue)"],
+      },
+
+      animation: {
+        marqueeLeft: "marqueeLeft 80s linear infinite",
+        marqueeRight: "marqueeRight 80s linear infinite",
+        smoothAppear: "smooth-appear 1s ease forwards",
+      },
+
+      keyframes: {
+        marqueeLeft: {
+          from: { transform: "translateX(0)" },
+          to: {
+            transform: "translateX(calc(-100% - 5rem))",
+          },
+        },
+
+        marqueeRight: {
+          from: { transform: "translateX(calc(-100% - 5rem))" },
+          to: { transform: "translateX(0)" },
+        },
+
+        "smooth-appear": {
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+      },
+
+      screens: {
+        mobile: "320px",
+        mobileM: "475px",
+        mobileL: "580px",
+        mobileXL: "640px",
+        tablet: "768px",
+        tabletM: "896px",
+        tabletL: "920px",
+        laptop: "1024px",
+        desktop: "1280px",
       },
     },
   },

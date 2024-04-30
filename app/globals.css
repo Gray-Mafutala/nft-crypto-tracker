@@ -2,32 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* customize text selection color */
+::selection {
+  color: #212121cc;
+  background: #cbfe00;
+}
+::-moz-selection {
+  color: #212121cc;
+  background: #cbfe00;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* customize scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  background-color: #313d01;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #dbff4b;
+  border-radius: 6px;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-black text-white font-poppins;
+  }
+
+  p {
+    @apply text-grey text-xl;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer components {
+  .flex-centered-section-1240 {
+    @apply max-w-[1240px] mx-auto flex;
+  }
+
+  .marquee-box-sides-shadow {
+    mask-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0) 0%,
+      rgb(0, 0, 0) 12.5%,
+      rgb(0, 0, 0) 87.5%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .scrollbar-w-2::-webkit-scrollbar {
+    @apply bg-gray-50 w-1;
+  }
+
+  .scrollbar-w-2::-webkit-scrollbar-thumb {
+    @apply bg-yellow/80;
+  }
+
+  .scrollbar-h-2::-webkit-scrollbar {
+    @apply bg-gray-300 rounded-2xl h-2 cursor-pointer;
+  }
+
+  .scrollbar-h-2::-webkit-scrollbar-thumb {
+    @apply bg-yellow/80 rounded-2xl cursor-pointer;
   }
 }
