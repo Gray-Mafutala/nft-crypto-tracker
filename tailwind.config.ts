@@ -60,6 +60,10 @@ const config: Config = {
         },
       },
 
+      transitionTimingFunction: {
+        "custom-carousel": "cubic-bezier(.42,.97,.52,1.49)",
+      },
+
       screens: {
         mobile: "320px",
         mobileM: "475px",

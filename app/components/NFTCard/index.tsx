@@ -20,7 +20,6 @@ type Props = {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
-
   const {
     data: ethPriceUsd,
     isLoading,
@@ -32,8 +31,8 @@ const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
 
   return (
     <div
-      className="w-72 bg-off-black px-3 py-4 border border-grey/20 rounded-xl
-      flex flex-col"
+      className="w-[272px] mobileM:w-96 tablet:w-72 tabletM:w-80 tabletL:w-96 desktop:w-72 bg-off-black px-3 py-4
+      border border-grey/20 rounded-xl flex flex-col"
     >
       <Image
         src={imgSrc}
@@ -46,10 +45,10 @@ const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
 
       {/* nft name, collection name and yellow Auction btn */}
       <div className="flex items-center justify-between gap-x-8">
-        <div className="flex flex-col">
+        <div className="flex flex-col w-[55%]">
           {/* nft name */}
           <h5
-            className="font-tt-firs-neue font-bold text-lg max-w-28 truncate"
+            className="font-tt-firs-neue font-bold text-lg truncate"
             title={name}
           >
             {name}
@@ -57,7 +56,7 @@ const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
 
           {/* collection name */}
           <p className="flex items-center gap-x-2" title={collectionName}>
-            <span className="font-medium text-xs text-grey uppercase max-w-28 truncate">
+            <span className="font-medium text-xs text-grey uppercase truncate">
               {collectionName}
             </span>
 
@@ -117,7 +116,7 @@ const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
                 (lastPrice * parseFloat(ethPriceUsd?.data.priceUsd)).toFixed(2)}
             </span>
 
-            <span className="text-xl font-techno-chain">
+            <span className="text-xl font-techno-chain whitespace-nowrap">
               {lastPrice} {chain.toUpperCase()}
             </span>
           </div>

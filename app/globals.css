@@ -32,6 +32,10 @@
     @apply bg-black text-white font-poppins;
   }
 
+  h2 {
+    @apply uppercase font-techno-chain text-4xl desktop:text-5xl
+  }
+
   p {
     @apply text-grey text-xl;
   }

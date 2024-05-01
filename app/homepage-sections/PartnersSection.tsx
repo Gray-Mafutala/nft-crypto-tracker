@@ -44,7 +44,7 @@ const partnersListBottom = [
 const PartnersSection = () => {
   return (
     <section className="mt-28 flex flex-col items-center gap-y-14">
-      <h2 id="our_partners" className="uppercase font-techno-chain text-5xl">
+      <h2 id="our_partners">
         Our Partners
       </h2>
 

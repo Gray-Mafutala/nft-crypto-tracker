@@ -36,9 +36,9 @@ const MarqueeList = ({ itemList, direction }: Props) => {
             <Image
               src={logo}
               alt={title}
-              className="max-w-16 w-full h-16 object-cover rounded-md"
+              className="max-w-12 desktop:max-w-16 w-full aspect-square object-cover rounded-md"
             />
-            <span className="text-xl font-bold font-tt-firs-neue">{title}</span>
+            <span className="text-lg desktop:text-xl font-bold font-tt-firs-neue">{title}</span>
           </li>
         ))}
       </ul>
@@ -59,9 +59,9 @@ const MarqueeList = ({ itemList, direction }: Props) => {
             <Image
               src={logo}
               alt={title}
-              className="max-w-16 w-full h-16 object-cover rounded-md"
+              className="max-w-12 desktop:max-w-16 w-full aspect-square object-cover rounded-md"
             />
-            <span className="text-xl font-bold font-tt-firs-neue">{title}</span>
+            <span className="text-lg desktop:text-xl font-bold font-tt-firs-neue">{title}</span>
           </li>
         ))}
       </ul>

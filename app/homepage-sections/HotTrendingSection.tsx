@@ -63,13 +63,12 @@ const HotTrendingSection = async () => {
   return (
     <section
       id="hot_trending"
-      className="flex-centered-section-1240 mt-16 flex flex-col items-center gap-y-14"
+      className="mt-16 flex-centered-section-1240 flex-col items-center 
+      gap-y-10 laptop:gap-y-14"
     >
       {/* top-content */}
       <header className="text-center">
-        <h2 className="uppercase font-techno-chain text-5xl">
-          Hot Trending on this week
-        </h2>
+        <h2>Hot Trending on this week</h2>
         <p className="max-w-[628px] mt-6">
           Various kinds of NFTs that are trending the trend will be reset every
           week. Don’t miss out on the best NFTs every week!
@@ -77,39 +76,64 @@ const HotTrendingSection = async () => {
       </header>
 
       {/* bottom-content */}
-      <div className="bg-off-black rounded-[20px] p-4 flex items-center gap-x-12">
-        <div className="w-[500px] h-[480px]">
-          {/* left content - carousel */}
+      <div
+        className="w-full max-w-screen-md laptop:max-w-max laptop:w-auto bg-off-black rounded-[20px] p-4 flex 
+        items-center justify-center gap-x-12"
+      >
+        {/* left content - carousel */}
+        <div className="hidden laptop:block aspect-square laptop:w-[420px] desktop:w-[500px]">
           <HotTrendingCarousel sliders={hotTrendingData} />
         </div>
 
         {/* right content - Hot Trending on this week... */}
-        <div className=" flex flex-col">
+        <div className="flex flex-col">
           <AvatarProfil
             img={nobleCardsLogo}
             profilName="Farworld"
             addStyles="mt-4"
           />
 
-          <p className="mt-6 max-w-[530px]">
+          <p className="mt-6 laptop:max-w-[530px]">
             A Mysterious World 🪐 Filled With Mysterious Creatures 👾
           </p>
 
-          <div className="mt-11 flex items-center gap-x-9">
-            <div className="flex flex-col border-r border-grey/20 pr-9">
-              <span className="uppercase font-techno-chain bg-gradient-silver bg-clip-text text-transparent">
+          {/* carousel for small screens */}
+          <div className="mt-8 min-w-56 w-full aspect-square laptop:hidden">
+            <HotTrendingCarousel sliders={hotTrendingData} />
+          </div>
+
+          {/* price and auction end */}
+          <div
+            className="mt-11 flex flex-col gap-y-8 tablet:flex-row items-center 
+            justify-between laptop:justify-start gap-x-9"
+          >
+            <div
+              className="tablet:w-1/2 laptop:w-auto flex flex-col tablet:border-r 
+              border-grey/20 tablet:pr-9 pr-0 items-center tablet:items-start
+              whitespace-nowrap"
+            >
+              <span
+                className="uppercase font-techno-chain bg-gradient-silver
+                bg-clip-text text-transparent"
+              >
                 Current Bid
               </span>
               <span className="mt-3 mb-1 text-3xl font-medium font-tt-firs-neue">
                 {NFT_ETH_PRICE} ETH
               </span>
-              <span className="text-lg text-grey font-medium font-tt-firs-neue -tracking-wide">
+              <span
+                className="text-lg text-grey font-medium font-tt-firs-neue 
+                -tracking-wide"
+              >
                 ${(NFT_ETH_PRICE * ethPriceUsd).toFixed(2)}
               </span>
             </div>
 
-            <div className="flex flex-col">
-              <span className="uppercase font-techno-chain bg-gradient-silver bg-clip-text text-transparent">
+            <div className="flex flex-col items-center tablet:items-start">
+              <span
+                className="uppercase font-techno-chain bg-gradient-silver 
+                bg-clip-text text-transparent"
+              >
                 Auction END
               </span>
 
@@ -120,7 +144,7 @@ const HotTrendingSection = async () => {
 
           <YellowButton
             variant={YellowButtonVariants.bottomYellowShadow}
-            addStyles="mt-12 self-start"
+            addStyles="mt-12 self-center laptop:self-start"
           >
             Place a Bid
           </YellowButton>

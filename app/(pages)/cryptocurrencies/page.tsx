@@ -67,7 +67,7 @@ const CryptocurrenciesPage = () => {
 
   return (
     <main>
-      <section className="hidden flex-centered-section-1240 flex-col ">
+      <section className="flex-centered-section-1240 flex-col ">
         <header>
           <h1 className="font-tt-firs-neue text-3xl font-medium">
             Today's Cryptocurrency Prices by Market Cap

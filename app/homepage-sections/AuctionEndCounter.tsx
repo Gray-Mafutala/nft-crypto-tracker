@@ -10,11 +10,11 @@ const AuctionEndCounter = () => {
   });
 
   return (
-    <div className="flex items-center gap-x-5">
+    <div className="flex items-center gap-x-5 whitespace-nowrap">
       {/* hour */}
       <div className="flex flex-col">
         <span
-          className="mt-3 mb-1 text-3xl font-tt-firs-neue font-medium bg-gradient-yellow
+          className="mt-3 mb-1 min-w-12 text-3xl font-tt-firs-neue font-medium bg-gradient-yellow
           bg-clip-text text-transparent"
         >
           {hours}{" "}
@@ -28,7 +28,7 @@ const AuctionEndCounter = () => {
       {/* min */}
       <div className="flex flex-col">
         <span
-          className="mt-3 mb-1 text-3xl font-tt-firs-neue font-medium bg-gradient-yellow
+          className="mt-3 mb-1 min-w-12 text-3xl font-tt-firs-neue font-medium bg-gradient-yellow
           bg-clip-text text-transparent"
         >
           {minutes}{" "}
@@ -42,7 +42,7 @@ const AuctionEndCounter = () => {
       {/* sec */}
       <div className="flex flex-col">
         <span
-          className="mt-3 mb-1 text-3xl font-tt-firs-neue font-medium bg-gradient-yellow
+          className="mt-3 mb-1 min-w-12 text-3xl font-tt-firs-neue font-medium bg-gradient-yellow
           bg-clip-text text-transparent"
         >
           {seconds}

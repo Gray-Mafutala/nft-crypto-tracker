@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
@@ -97,14 +97,14 @@ const HotTrendingCarousel = ({ sliders }: Props) => {
             className={
               index === currentSlide
                 ? `absolute w-full left-0 top-0 object-cover 
-                    transition-all duration-500 ease-out hover:scale-110`
+                    transition-all duration-500 hover:scale-110 ease-custom-carousel`
                 : index > currentSlide
                 ? `absolute w-full left-0 top-0 object-cover
                     translate-x-[100%] transition-transform duration-500
-                    ease-in-out`
+                    ease-custom-carousel`
                 : `absolute w-full left-0 top-0 object-cover 
                     -translate-x-[100%] transition-transform duration-500
-                    ease-in-out`
+                    ease-custom-carousel`
             }
             width={500}
             height={500}
