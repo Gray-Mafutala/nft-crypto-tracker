@@ -6,7 +6,7 @@ import { CgClose } from "react-icons/cg";
 import NavLinks from "./NavLinks";
 import YellowButton from "@/app/ui/YellowButton";
 import RoundedButtonClose from "@/app/ui/RoundedButtonClose";
-import ClientPortal from "../MarqueeList.tsx/ClientPortal";
+import ClientPortal from "../ClientPortal";
 
 type Props = {
   onClose: () => void;
@@ -27,15 +27,17 @@ const MobileMenu = ({ isOpen, onClose }: Props) => {
         onClick={onClose}
         className={
           isOpen
-            ? "fixed inset-0 w-full h-full bg-off-black/10 backdrop-blur-sm z-50 duration-200"
-            : "fixed inset-0 w-full h-full bg-off-black/10 backdrop-blur-sm z-50 translate-x-[100%] duration-200"
+            ? "fixed inset-0 w-full h-full bg-off-black/10 backdrop-blur-sm z-50"
+            : "fixed inset-0 w-full h-full bg-off-black/10 backdrop-blur-sm z-50 translate-x-[100%]"
         }
       >
         {/* inner container */}
         <div
+          key={new Date().getTime()}
           onClick={(e) => e.stopPropagation()}
           className="w-full mobileL:max-w-md ml-auto h-screen pt-20 bg-off-black
-        flex flex-col items-center gap-y-10"
+          flex flex-col items-center gap-y-10
+          opacity-0 translate-x-5 animate-smoothAppearHorizontal"
         >
           {/* btn to close mobile menu */}
           <RoundedButtonClose onClick={onClose} />

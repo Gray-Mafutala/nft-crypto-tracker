@@ -1,13 +1,9 @@
 import Image from "next/image";
-import YellowButton, {
-  YellowButtonPaddings,
-  YellowButtonVariants,
-} from "@/app/ui/YellowButton";
-
 import AuctionEndCounter from "./AuctionEndCounter";
 import { NFTChainsName } from "@/app/homepage-sections/ExploreOurCollectionsSection";
 import useSWR from "swr";
 import { EthPriceType } from "@/app/homepage-sections/HotTrendingSection";
+import AuctionButton from "./AuctionButton";
 
 type Props = {
   name: string;
@@ -26,7 +22,8 @@ const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
     error,
   } = useSWR<EthPriceType, any>(
     "https://api.coincap.io/v2/assets/ethereum",
-    fetcher
+    fetcher, 
+    {revalidateIfStale:true}
   );
 
   return (
@@ -84,12 +81,7 @@ const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
           </p>
         </div>
 
-        <YellowButton
-          variant={YellowButtonVariants.bottomYellowShadow}
-          size={YellowButtonPaddings.small}
-        >
-          Auction
-        </YellowButton>
+        <AuctionButton />
       </div>
 
       {/* prices */}
@@ -123,7 +115,7 @@ const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
         </div>
 
         {/* auction end */}
-        <AuctionEndCounter />
+        <AuctionEndCounter hour={23} min={18} sec={32} />
       </div>
     </div>
   );

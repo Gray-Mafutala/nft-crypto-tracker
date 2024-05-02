@@ -9,7 +9,7 @@ type Props = {
 const NftCollectionWrapper = ({ nftCollection }: Props) => {
   return (
     <ul
-      className="opacity-0 -translate-y-5 animate-smoothAppear mt-12 grid gap-4
+      className="opacity-0 -translate-y-5 animate-smoothAppearVertical mt-12 grid gap-4
       grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4"
     >
       {nftCollection.map((nftData) => (

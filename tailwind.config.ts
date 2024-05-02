@@ -36,7 +36,8 @@ const config: Config = {
       animation: {
         marqueeLeft: "marqueeLeft 80s linear infinite",
         marqueeRight: "marqueeRight 80s linear infinite",
-        smoothAppear: "smooth-appear 1s ease forwards",
+        smoothAppearVertical: "smooth-appear-vertical .6s ease forwards",
+        smoothAppearHorizontal: "smooth-appear-horizontal .6s ease forwards",
       },
 
       keyframes: {
@@ -52,10 +53,17 @@ const config: Config = {
           to: { transform: "translateX(0)" },
         },
 
-        "smooth-appear": {
+        "smooth-appear-vertical": {
           to: {
             opacity: "1",
             transform: "translateY(0)",
+          },
+        },
+
+        "smooth-appear-horizontal": {
+          to: {
+            opacity: "1",
+            transform: "translateX(0)",
           },
         },
       },

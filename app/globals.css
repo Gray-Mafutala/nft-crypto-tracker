@@ -23,6 +23,21 @@
   border-radius: 6px;
 }
 
+/* delete x on search input */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+input[type="search"]::-ms-clear,
+input[type="search"]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 @layer base {
   html {
     @apply scroll-smooth;
@@ -33,7 +48,7 @@
   }
 
   h2 {
-    @apply uppercase font-techno-chain text-4xl desktop:text-5xl
+    @apply uppercase font-techno-chain text-4xl desktop:text-5xl;
   }
 
   p {

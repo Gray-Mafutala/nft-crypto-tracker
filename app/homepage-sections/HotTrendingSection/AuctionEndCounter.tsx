@@ -5,8 +5,8 @@ import useCountDown from "@/hooks/useCountDown";
 const AuctionEndCounter = () => {
   const [hours, minutes, seconds] = useCountDown({
     hour: 23,
-    min: 43,
-    sec: 56,
+    min: 18,
+    sec: 32,
   });
 
   return (

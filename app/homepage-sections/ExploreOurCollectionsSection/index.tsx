@@ -3,10 +3,7 @@
 import { useState } from "react";
 import NftCollectionWrapper from "./NftCollectionWrapper";
 import nftsData from "../../../data/nfts.json";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
-import YellowButton, { YellowButtonVariants } from "@/app/ui/YellowButton";
-import { IoClose } from "react-icons/io5";
-import RoundedButtonClose from "@/app/ui/RoundedButtonClose";
+import NFTsCollectionTabMobile from "./NFTsCollectionTabMobile";
 
 export enum NFTChainsName {
   eth = "eth",
@@ -23,7 +20,7 @@ export type NFTItemDataType = {
   chain: NFTChainsName;
 };
 
-enum NftCollectionType {
+export enum NftCollectionType {
   Trending = "trending",
   AsyncArt = "async-art",
   Morpheus = "morpheus",
@@ -32,7 +29,7 @@ enum NftCollectionType {
   Monsters = "monsters",
 }
 
-type NftCollectionNameTuple = [string, NftCollectionType];
+export type NftCollectionNameTuple = [string, NftCollectionType];
 
 const NFT_COLLECTION_NAME: NftCollectionNameTuple[] = [
   ["Trending", NftCollectionType.Trending],
@@ -48,8 +45,10 @@ const ExploreOurCollectionsSection = () => {
     NftCollectionType.Trending
   );
 
-  const [showCollectionTabItems, setShowCollectionTabItems] = useState(false);
-  const closeCollectionTabItems = () => setShowCollectionTabItems(false);
+  const [collectionTabMobile, setCollectionTabMobile] = useState(false);
+  const closeNFTsCollectionTabMobile = () => setCollectionTabMobile(false);
+  const toggleNFTsCollectionTabMobile = () =>
+    setCollectionTabMobile((value) => !value);
 
   return (
     <section
@@ -67,7 +66,7 @@ const ExploreOurCollectionsSection = () => {
       {/* NFTs Collection tab - width > 580px */}
       <ul
         className="hidden tablet:grid mt-12 grid-cols-3 desktop:grid-cols-6 
-        items-center justify-center text-center gap-x-10 gap-y-6"
+          items-center justify-center text-center gap-x-10 gap-y-6"
       >
         {NFT_COLLECTION_NAME.map((collection) => (
           <li
@@ -89,56 +88,19 @@ const ExploreOurCollectionsSection = () => {
         ))}
       </ul>
 
-      {/* NFTs Collection tab width < 580px */}
-      <div className="tablet:hidden mt-8">
-        <YellowButton
-          addStyles="flex items-center gap-x-6"
-          variant={YellowButtonVariants.bottomYellowShadow}
-          onClick={() => setShowCollectionTabItems((value) => !value)}
-        >
-          NFT Collections
-          <IoIosArrowDropdownCircle size={24} />
-        </YellowButton>
+      {/* NFTs Collection tab for small screens */}
+      <NFTsCollectionTabMobile
+        isOpen={collectionTabMobile}
+        onToggleDisplay={toggleNFTsCollectionTabMobile}
+        onClose={closeNFTsCollectionTabMobile}
+        NFT_COLLECTION_NAME={NFT_COLLECTION_NAME}
+        currentCollection={currentCollection}
+        setCurrentCollection={setCurrentCollection}
+      />
 
-        <ul
-          className={
-            showCollectionTabItems
-              ? `fixed inset-0 z-10 bg-black/80 backdrop-blur-sm
-                  flex flex-col items-center pt-9 gap-y-4 text-center
-                  translate-y-0 duration-300`
-              : `fixed inset-0 z-10 bg-black/80 backdrop-blur-sm
-                  flex flex-col items-center pt-9 gap-y-4 text-center
-                  -translate-y-[120%] duration-300`
-          }
-        >
-          <RoundedButtonClose onClick={closeCollectionTabItems} />
-
-          {NFT_COLLECTION_NAME.map((collection) => (
-            <li
-              key={collection[1]}
-              onClick={() => {
-                setCurrentCollection(collection[1]);
-                setShowCollectionTabItems(false);
-              }}
-              className={
-                collection[1] === currentCollection
-                  ? `uppercase font-techno-chain inline-block px-8 py-3 select-none
-                    cursor-pointer whitespace-nowrap text-[#242904] bg-gradient-yellow
-                    rounded-[110px]`
-                  : `uppercase font-techno-chain inline-block px-8 py-3 select-none
-                    cursor-pointer whitespace-nowrap text-grey bg-off-black
-                    rounded-[110px] hover:bg-gradient-yellow hover:text-[#242904] 
-                    duration-500`
-              }
-            >
-              {collection[1]}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* NFTs Collection Wrapper */}
+      {/* NFTs Collection Wrapper (add the key, to tell React it's a new component, in order to apply CSS animation to each change...) */}
       <NftCollectionWrapper
+        key={currentCollection}
         nftCollection={nftsData[currentCollection] as NFTItemDataType[]}
       />
     </section>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import HeroNFTImg from "../../assets/images/home-page/hero-section/hero-image.png";
+import HeroNFTImg from "../../../assets/images/home-page/hero-section/hero-image.png";
 import YellowButton from "@/app/ui/YellowButton";
 
 const HeroSection = () => {

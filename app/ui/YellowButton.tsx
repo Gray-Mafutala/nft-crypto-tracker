@@ -17,7 +17,7 @@ type Props = {
   size?: YellowButtonPaddings;
   isLink?: boolean;
   link?: string;
-  onClick?: () => void;
+  onClick?: (argsList?: any) => void;
 };
 
 const YellowButton = ({

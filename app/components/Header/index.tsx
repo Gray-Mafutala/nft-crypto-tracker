@@ -12,8 +12,14 @@ const Header = () => {
   const toggleMobileMenu = () => setMobileMenuIsOpen((value) => !value);
 
   return (
-    <header className="mt-5 mb-10">
-      <nav className="flex-centered-section-1240 items-center justify-between gap-x-8">
+    <header
+      className="pt-5 mb-10 sticky top-0 z-[5] bg-black/80 backdrop-blur-sm
+      border-b border-grey/20 -mx-5 shadow-md shadow-grey/5"
+    >
+      <nav
+        className="flex-centered-section-1240 pb-5 items-center justify-between
+        gap-x-8"
+      >
         {/* site logo and name */}
         <div className="flex items-center gap-1">
           <NFTIcon />

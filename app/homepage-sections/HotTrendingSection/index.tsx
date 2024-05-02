@@ -1,11 +1,12 @@
 import { promises as fs } from "fs";
 
-import AvatarProfil from "../components/AvatarProfil";
-import nobleCardsLogo from "../../assets/images/farworld-logo.jpeg";
-import YellowButton, { YellowButtonVariants } from "../ui/YellowButton";
+import AvatarProfil from "@/app/components/AvatarProfil";
+import nobleCardsLogo from "../../../assets/images/farworld-logo.jpeg";
 import AuctionEndCounter from "./AuctionEndCounter";
 import HotTrendingCarousel from "./HotTrendingCarousel";
-import { NFTChainsName } from "./ExploreOurCollectionsSection";
+import { NFTChainsName } from "../ExploreOurCollectionsSection";
+import PlaceABidButton from "./PlaceABidButton";
+import CurrentNFTPrice from "./CurrentNFTPrice";
 
 type NftItem = {
   itemName: string;
@@ -56,9 +57,8 @@ const HotTrendingSection = async () => {
     img: nftItem.imgPath,
     alt: nftItem.itemName,
     id: nftItem.itemName,
+    lastPrice: nftItem.lastPrice,
   }));
-
-  const NFT_ETH_PRICE = 0.002;
 
   return (
     <section
@@ -107,27 +107,8 @@ const HotTrendingSection = async () => {
             className="mt-11 flex flex-col gap-y-8 tablet:flex-row items-center 
             justify-between laptop:justify-start gap-x-9"
           >
-            <div
-              className="tablet:w-1/2 laptop:w-auto flex flex-col tablet:border-r 
-              border-grey/20 tablet:pr-9 pr-0 items-center tablet:items-start
-              whitespace-nowrap"
-            >
-              <span
-                className="uppercase font-techno-chain bg-gradient-silver
-                bg-clip-text text-transparent"
-              >
-                Current Bid
-              </span>
-              <span className="mt-3 mb-1 text-3xl font-medium font-tt-firs-neue">
-                {NFT_ETH_PRICE} ETH
-              </span>
-              <span
-                className="text-lg text-grey font-medium font-tt-firs-neue 
-                -tracking-wide"
-              >
-                ${(NFT_ETH_PRICE * ethPriceUsd).toFixed(2)}
-              </span>
-            </div>
+            {/* nft last price in eth and usd */}
+            <CurrentNFTPrice ethPriceUsd={ethPriceUsd} />
 
             <div className="flex flex-col items-center tablet:items-start">
               <span
@@ -142,12 +123,7 @@ const HotTrendingSection = async () => {
             </div>
           </div>
 
-          <YellowButton
-            variant={YellowButtonVariants.bottomYellowShadow}
-            addStyles="mt-12 self-center laptop:self-start"
-          >
-            Place a Bid
-          </YellowButton>
+          <PlaceABidButton />
         </div>
       </div>
     </section>

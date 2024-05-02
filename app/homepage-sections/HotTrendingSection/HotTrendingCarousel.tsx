@@ -4,14 +4,19 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import useSlideChangeNFTPricesStore from "@/store/slideChangeNFTPricesStore";
 
 type Props = {
-  sliders: { img: string; alt: string; id: string }[];
+  sliders: { img: string; alt: string; id: string; lastPrice: number }[];
 };
 
 const HotTrendingCarousel = ({ sliders }: Props) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
+
+  const setCurrentPrice = useSlideChangeNFTPricesStore(
+    (state) => state.setCurrentPrice
+  );
 
   const goToNextSlide = () => {
     setCurrentSlide((prevSlide) =>
@@ -27,16 +32,32 @@ const HotTrendingCarousel = ({ sliders }: Props) => {
 
   const goToSpecificSlide = (numSlide: number) => setCurrentSlide(numSlide);
 
-  useEffect(() => {
-    if (autoPlay === false) return;
-    const clear = setInterval(() => {
-      setCurrentSlide((prevSlide) =>
-        prevSlide + 1 < sliders.length ? prevSlide + 1 : 0
-      );
-    }, 2000);
+  const idTimerList: NodeJS.Timeout[] = [];
 
-    return () => clearInterval(clear);
+  useEffect(() => {
+    if (!autoPlay) {
+      idTimerList.forEach((idTimer) => clearInterval(idTimer));
+      return;
+    }
+
+    idTimerList.push(
+      setInterval(() => {
+        setCurrentSlide((prevSlide) =>
+          prevSlide + 1 < sliders.length ? prevSlide + 1 : 0
+        );
+      }, 2000)
+    );
+
+    console.log("idTimerList:", idTimerList);
+
+    return () => {
+      idTimerList.forEach((idTimer) => clearInterval(idTimer));
+    };
   }, [autoPlay, sliders]);
+
+  useEffect(() => {
+    setCurrentPrice(sliders[currentSlide].lastPrice);
+  }, [currentSlide]);
 
   return (
     <div
@@ -49,7 +70,7 @@ const HotTrendingCarousel = ({ sliders }: Props) => {
         onClick={goToPrevSlide}
         className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full
         bg-gradient-yellow text-slate-800 active:scale-95 duration-300 ease-out
-        hover:text-grey hover:shadow-[0_0px_8px_2px_#cbfe00] z-10"
+        hover:text-grey hover:shadow-[0_0px_8px_2px_#cbfe00] z-[1]"
       >
         <MdKeyboardArrowLeft className="text-[1.5rem] mobileM:text-[2rem]" />
       </button>
@@ -59,7 +80,7 @@ const HotTrendingCarousel = ({ sliders }: Props) => {
         onClick={goToNextSlide}
         className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full 
         bg-gradient-yellow text-slate-800 active:scale-95 duration-300 ease-out
-        hover:text-grey hover:shadow-[0_0px_8px_2px_#cbfe00] z-10"
+        hover:text-grey hover:shadow-[0_0px_8px_2px_#cbfe00] z-[1]"
       >
         <MdKeyboardArrowRight className="text-[1.5rem] mobileM:text-[2rem]" />
       </button>
@@ -67,7 +88,7 @@ const HotTrendingCarousel = ({ sliders }: Props) => {
       {/* dots navigation */}
       <div
         className="absolute bottom-7 left-1/2 -translate-x-1/2 
-          flex items-center gap-x-[6px] z-10"
+          flex items-center gap-x-[6px] z-[1]"
       >
         {sliders.map(({ id }, index) => (
           <span

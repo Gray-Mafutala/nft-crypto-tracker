@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ComingSoonModal from "./components/ComingSoonModal.tsx";
 
 export const metadata: Metadata = {
   title: "NFT Crypto Tracker",
@@ -26,6 +27,7 @@ export default function RootLayout({
     >
       <body className="mx-5">
         <Header />
+        <ComingSoonModal />
         {children}
         <Footer />
       </body>
