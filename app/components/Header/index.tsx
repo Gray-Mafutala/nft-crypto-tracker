@@ -14,7 +14,8 @@ const Header = () => {
   return (
     <header
       className="pt-5 mb-10 sticky top-0 z-[5] bg-black/80 backdrop-blur-sm
-      border-b border-grey/20 -mx-5 shadow-md shadow-grey/5"
+      border-b border-grey/20 -mx-4 mobileM:-mx-5 px-4 mobileM:px-5 shadow-md
+      shadow-grey/5"
     >
       <nav
         className="flex-centered-section-1240 pb-5 items-center justify-between

@@ -40,9 +40,11 @@ const socialMedia = [
 ];
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear().toString();
+
   return (
     <footer
-      className="max-w-screen-desktop mx-auto mt-28 flex flex-col gap-y-14
+      className="mt-28 max-w-[1240px] mx-auto flex flex-col gap-y-14
       font-tt-firs-neue text-grey [&_p]:font-normal [&_p]:text-base"
     >
       {/* top content */}
@@ -158,7 +160,9 @@ const Footer = () => {
         className="pt-6 mb-7 flex flex-col gap-y-8 mobileL:gap-y-4 text-center
         tablet:text-left tablet:flex-row justify-between border-t border-grey"
       >
-        <p className="">&#64;2024NFTCryptoTracker. All rights reserved </p>
+        <p className="">
+          &#64;{currentYear}-NFTCryptoTracker. All rights reserved
+        </p>
 
         <p
           className="-order-1 tablet:order-1 flex flex-col gap-y-4

@@ -1,75 +1,135 @@
 "use client";
 
-import YellowButton, { YellowButtonPaddings } from "@/app/ui/YellowButton";
 import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import Header from "./Header";
+import ComboboxSearch from "./ComboboxSearch";
+import DisplayError from "@/app/ui/DisplayError";
+import LoadingSpinner from "@/app/ui/LoadingSpinner";
+import PriceOnExchangeCard from "./PriceOnExchangeCard";
+
+type ResultsImportantsData = {
+  baseSymbol: string;
+  exchangeId: string;
+  priceUsd: string;
+  updated: string;
+};
 
 const PricesComparatorPage = () => {
-  const [searchValue, setSearchValue] = useState("Bitcoin");
-  const [result, setResult] = useState();
-  const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState<ResultsImportantsData[] | null>(null);
+  const [error, setError] = useState<Error | null>();
 
-  const hanleSubmit = (cryptoId: string) => {
+  const handleSubmit = (searchValue: string) => {
+    if (!searchValue) return;
+
+    const cryptoId = searchValue.toLowerCase();
+    setIsLoading(true);
+    setError(null);
     fetch(`https://api.coincap.io/v2/markets?baseId=${cryptoId}`)
       .then((result) => result.json())
-      .then((data) => setResult(data))
-      .catch((err) => setError(err));
+      .then((json) => {
+        setResults(json?.data);
+      })
+      .catch((err) => setError(err))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const removeDuplicatesAndKeepLatest = (
+    results: ResultsImportantsData[]
+  ): ResultsImportantsData[] => {
+    const uniqueExchangeIds = Array.from(
+      new Set(results.map((item) => item.exchangeId))
+    );
+
+    return uniqueExchangeIds
+      .map((exchangeId) => {
+        const filteredResults = results
+          .filter((item) => item.exchangeId === exchangeId)
+          .sort(
+            (a, b) =>
+              new Date(b.updated).getTime() - new Date(a.updated).getTime()
+          );
+
+        if (
+          filteredResults.length === 1 &&
+          filteredResults[0].priceUsd === null
+        ) {
+          return null;
+        }
+
+        const latestNonNullPrice = filteredResults.find(
+          (item) => item.priceUsd !== null
+        );
+        return latestNonNullPrice || filteredResults[0];
+      })
+      .filter((item): item is ResultsImportantsData => item !== null);
+  };
+
+  const getPriceColor = (price: number) => {
+    const allPrices = removeDuplicatesAndKeepLatest(
+      results as ResultsImportantsData[]
+    )
+      .map((item) => parseFloat(item.priceUsd))
+      .filter((price) => !isNaN(price));
+
+    const minPrice = Math.min(...allPrices);
+    const maxPrice = Math.max(...allPrices);
+    const midPrice = (minPrice + maxPrice) / 2;
+
+    if (price === minPrice) return "bg-green-500";
+    if (price === maxPrice) return "bg-red-500";
+
+    const range = maxPrice - minPrice;
+    const normalizedPrice = (price - minPrice) / range;
+
+    if (price < midPrice) {
+      return normalizedPrice < 0.2
+        ? "bg-green-400"
+        : normalizedPrice < 0.4
+        ? "bg-green-300"
+        : "bg-orange-300";
+    } else {
+      return normalizedPrice < 0.6
+        ? "bg-orange-300"
+        : normalizedPrice < 0.8
+        ? "bg-red-300"
+        : "bg-red-400";
+    }
   };
 
   return (
-    <main>
-      <section className="text-center flex flex-col gap-y-8 items-center">
-        <header className="flex flex-col items-center gap-y-5">
-          <h1 className="font-tt-firs-neue text-3xl font-medium">
-            Exchange Watch
-          </h1>
+    <main className="max-w-[1240px] mx-auto flex flex-col gap-y-5 items-center">
+      <Header />
+      <ComboboxSearch handleSearch={handleSubmit} />
 
-          <p className="text-base">
-            Compare Crypto Prices Across Top Exchanges 🚀
-          </p>
-        </header>
+      {/* error */}
+      {error && <DisplayError />}
 
-        <div
-          className="max-w-96 w-full min-w-56 border border-grey/50
-          rounded-lg bg-off-black/60 px-5 py-6"
+      {/* loading */}
+      {!error && isLoading && <LoadingSpinner />}
+
+      {/* results */}
+      {!error && !isLoading && (
+        <section
+          className="w-full grid grid-cols-1 justify-items-center mobileL:grid-cols-2
+          tablet:grid-cols-3 laptop:grid-cols-4 gap-6"
         >
-          {/* select the crypto for which price comparison is needed */}
-          <div>
-            <div className="relative">
-              <input
-                type="search"
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                onKeyUp={(e) =>
-                  (e.code === "Enter" || e.code === "NumpadEnter") &&
-                  hanleSubmit(searchValue)
-                }
-                className="rounded-md py-2 px-5 text-off-black w-full text-xl
-                font-medium outline-none focus:outline-grey/50
-                outline-offset-[3px] pr-20 duration-300"
-              />
-
-              <YellowButton
-                addStyles="absolute top-1 right-2 text-off-black/60 px-2 py-1
-                rounded-full hover:text-yellow active:text-off-black/60"
-                size={YellowButtonPaddings.small}
-                onClick={hanleSubmit}
-              >
-                <FaSearch size={24} />
-              </YellowButton>
-            </div>
-
-            {/* crypto list to be displayed according to what is entered */}
-            <ul></ul>
-          </div>
-
-          {/* result box */}
-          <div className="text-center">
-            {error && JSON.stringify(error)}
-            {result && JSON.stringify(result)}
-          </div>
-        </div>
-      </section>
+          {results &&
+            removeDuplicatesAndKeepLatest(results).map(
+              ({ exchangeId, priceUsd, updated }) => (
+                <PriceOnExchangeCard
+                  key={exchangeId}
+                  exchangeId={exchangeId}
+                  priceUsd={priceUsd}
+                  date={updated}
+                  priceColor={getPriceColor(parseFloat(priceUsd))}
+                />
+              )
+            )}
+        </section>
+      )}
     </main>
   );
 };

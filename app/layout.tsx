@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ComingSoonModal from "./components/ComingSoonModal.tsx";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "NFT Crypto Tracker",
@@ -23,9 +24,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${poppins.variable} ${techno_chain.variable} ${tt_firs_neue.variable} antialiased`}
     >
-      <body className="mx-5">
+      <body
+        className={cn(
+          "mx-4 mobileM:mx-5 min-h-screen bg-background text-white font-poppins antialiased",
+          poppins.variable
+        )}
+      >
         <Header />
         <ComingSoonModal />
         {children}

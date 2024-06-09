@@ -17,6 +17,7 @@ type Props = {
   size?: YellowButtonPaddings;
   isLink?: boolean;
   link?: string;
+  type?: "button" | "submit" | "reset"
   onClick?: (argsList?: any) => void;
 };
 
@@ -51,7 +52,8 @@ const YellowButton = ({
           className={
             // yellow button with small yellow bottom shadow
             variant === YellowButtonVariants.bottomYellowShadow
-              ? `${regularStyle} shadow-[0_16px_28px_-18px_#cbfe00] hover:shadow-none ${addStyles}`
+              ? `${regularStyle} shadow-[0_16px_28px_-18px_#cbfe00] hover:shadow-none
+                  ${addStyles}`
               : // regular style
                 `${regularStyle} ${addStyles}`
           }
@@ -63,10 +65,12 @@ const YellowButton = ({
       {!isLink && (
         <button
           onClick={onClick}
+          type="submit"
           className={
             // yellow button with small yellow bottom shadow
             variant === YellowButtonVariants.bottomYellowShadow
-              ? `${regularStyle} shadow-[0_16px_28px_-18px_#cbfe00] hover:shadow-none ${addStyles}`
+              ? `${regularStyle} shadow-[0_16px_28px_-18px_#cbfe00] hover:shadow-none
+                ${addStyles}`
               : // regular style
                 `${regularStyle} ${addStyles}`
           }
