@@ -99,18 +99,19 @@ type ComboboxProps = {
 };
 
 const ComboboxSearch = ({ handleSearch }: ComboboxProps) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [value, setValue] = React.useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       {/* current crypto selected */}
       <PopoverTrigger asChild>
+        {/* btn */}
         <Button
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="min-w-56 max-w-[420px] w-full justify-between border-grey/50
+          className="min-w-56 max-w-80 w-full justify-between border-grey/50
           rounded-lg px-4 py-5 text-base font-medium truncate"
         >
           {!value && <span>Select crypto...</span>}
@@ -138,14 +139,14 @@ const ComboboxSearch = ({ handleSearch }: ComboboxProps) => {
       </PopoverTrigger>
 
       {/* list */}
-      <PopoverContent className="p-0 min-w-56">
+      <PopoverContent className="p-0 w-fit mobileM:w-80">
         <Command>
           <CommandInput placeholder="Search crypto..." />
 
           <CommandList>
             <CommandEmpty>No crypto found.</CommandEmpty>
 
-            <CommandGroup>
+            <CommandGroup className="max-h-48 overflow-y-auto">
               {cryptoList.map((crypto) => (
                 <CommandItem
                   key={crypto.cryptoId}

@@ -6,6 +6,21 @@ import ComboboxSearch from "./ComboboxSearch";
 import DisplayError from "@/app/ui/DisplayError";
 import LoadingSpinner from "@/app/ui/LoadingSpinner";
 import PriceOnExchangeCard from "./PriceOnExchangeCard";
+import SortingButton, { SortingOptions } from "./SortingButton";
+import useSortingStore from "@/store/sortingOptionStore";
+
+const topExchanges = [
+  "bibox",
+  "binance",
+  "bitfinex",
+  "bitflyer",
+  "bitstamp",
+  "digifinex",
+  "gateio",
+  "gemini",
+  "hitbtc",
+  "kraken",
+];
 
 type ResultsImportantsData = {
   baseSymbol: string;
@@ -16,25 +31,10 @@ type ResultsImportantsData = {
 
 const PricesComparatorPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState<ResultsImportantsData[] | null>(null);
+  const [results, setResults] = useState<ResultsImportantsData[]>([]);
   const [error, setError] = useState<Error | null>();
 
-  const handleSubmit = (searchValue: string) => {
-    if (!searchValue) return;
-
-    const cryptoId = searchValue.toLowerCase();
-    setIsLoading(true);
-    setError(null);
-    fetch(`https://api.coincap.io/v2/markets?baseId=${cryptoId}`)
-      .then((result) => result.json())
-      .then((json) => {
-        setResults(json?.data);
-      })
-      .catch((err) => setError(err))
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  const sortingOption = useSortingStore((state) => state.sortingOption);
 
   const removeDuplicatesAndKeepLatest = (
     results: ResultsImportantsData[]
@@ -65,6 +65,69 @@ const PricesComparatorPage = () => {
         return latestNonNullPrice || filteredResults[0];
       })
       .filter((item): item is ResultsImportantsData => item !== null);
+  };
+
+  // search a token in combobox
+  const handleSearch = (searchValue: string) => {
+    if (!searchValue) return;
+
+    const cryptoId = searchValue.toLowerCase();
+    setIsLoading(true);
+    setError(null);
+    fetch(`https://api.coincap.io/v2/markets?baseId=${cryptoId}`)
+      .then((data) => data.json())
+      .then((dataAsJson) => {
+        setResults(removeDuplicatesAndKeepLatest(dataAsJson?.data));
+        handleSort(sortingOption);
+      })
+      .catch((err) => setError(err))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  // sort results data
+  const handleSort = (option: SortingOptions) => {
+    switch (option) {
+      case "exchange-id":
+        setResults((prevResults) =>
+          [...prevResults].sort((item1, item2) => {
+            const index1 = topExchanges.indexOf(item1.exchangeId);
+            const index2 = topExchanges.indexOf(item2.exchangeId);
+            if (index1 === -1 && index2 === -1) return 0;
+            if (index1 === -1) return 1;
+            if (index2 === -1) return -1;
+            return index1 - index2;
+          })
+        );
+        break;
+
+      case "price-asc":
+        setResults((prevResults) =>
+          [...prevResults].sort(
+            (item1, item2) =>
+              parseFloat(item1.priceUsd) - parseFloat(item2.priceUsd)
+          )
+        );
+        break;
+
+      case "price-desc":
+        setResults((prevResults) =>
+          [...prevResults].sort(
+            (item1, item2) =>
+              parseFloat(item2.priceUsd) - parseFloat(item1.priceUsd)
+          )
+        );
+        break;
+
+      default:
+        setResults((prevResults) =>
+          [...prevResults].sort((item1, item2) =>
+            item1.exchangeId.localeCompare(item2.exchangeId)
+          )
+        );
+        break;
+    }
   };
 
   const getPriceColor = (price: number) => {
@@ -102,7 +165,12 @@ const PricesComparatorPage = () => {
   return (
     <main className="max-w-[1240px] mx-auto flex flex-col gap-y-5 items-center">
       <Header />
-      <ComboboxSearch handleSearch={handleSubmit} />
+
+      {/* Combobox and SearchButton */}
+      <div className="flex justify-center gap-x-3 w-full ">
+        <ComboboxSearch handleSearch={handleSearch} />
+        <SortingButton handleSort={handleSort} />
+      </div>
 
       {/* error */}
       {error && <DisplayError />}
@@ -116,18 +184,15 @@ const PricesComparatorPage = () => {
           className="w-full grid grid-cols-1 justify-items-center mobileL:grid-cols-2
           tablet:grid-cols-3 laptop:grid-cols-4 gap-6"
         >
-          {results &&
-            removeDuplicatesAndKeepLatest(results).map(
-              ({ exchangeId, priceUsd, updated }) => (
-                <PriceOnExchangeCard
-                  key={exchangeId}
-                  exchangeId={exchangeId}
-                  priceUsd={priceUsd}
-                  date={updated}
-                  priceColor={getPriceColor(parseFloat(priceUsd))}
-                />
-              )
-            )}
+          {results.map(({ exchangeId, priceUsd, updated }) => (
+            <PriceOnExchangeCard
+              key={exchangeId}
+              exchangeId={exchangeId}
+              priceUsd={priceUsd}
+              date={updated}
+              priceColor={getPriceColor(parseFloat(priceUsd))}
+            />
+          ))}
         </section>
       )}
     </main>

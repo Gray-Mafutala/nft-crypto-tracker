@@ -35,11 +35,6 @@ const HeroSection = () => {
           and cryptos prices
         </h1>
 
-        <p className="max-w-lg mt-8 font-tt-firs-neue">
-          Discover exclusive NFT collections, track and compare cryptocurrency
-          prices in real-time.
-        </p>
-
         {/* hero image for small screens */}
         <div
           className="mt-8 tabletM:hidden w-full min-w-56 max-w-sm duration-200
@@ -55,6 +50,11 @@ const HeroSection = () => {
           />
         </div>
 
+        <p className="max-w-lg mt-8 font-tt-firs-neue">
+          Discover exclusive NFT collections, track and compare cryptocurrency
+          prices in real-time.
+        </p>
+
         <YellowButton
           isLink={true}
           link="/#nfts_collections"
@@ -69,8 +69,8 @@ const HeroSection = () => {
         className="hidden tabletM:block w-full min-w-[300px] max-w-sm
         laptop:max-w-md desktop:max-w-[500px] duration-200
         relative after:absolute after:bottom-16 after:left-[112px] after:w-28
-        after:rounded-full after:shadow-[0_-24px_128px_24px_#cbfe00] 
-        after:animate-pulse after:-z-[1]"
+        after:shadow-[0_-24px_128px_24px_#cbfe00] after:animate-pulse
+        after: after:-z-[1]"
       >
         <Image
           className="w-full h-auto object-cover"

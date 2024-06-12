@@ -22,20 +22,21 @@ const NFTCard = ({ name, imgSrc, collectionName, lastPrice, chain }: Props) => {
     error,
   } = useSWR<EthPriceType, any>(
     "https://api.coincap.io/v2/assets/ethereum",
-    fetcher, 
-    {revalidateIfStale:true}
+    fetcher,
+    { revalidateIfStale: true }
   );
 
   return (
     <div
       className="w-[272px] mobileM:w-96 tablet:w-72 tabletM:w-80 tabletL:w-96 desktop:w-72 bg-off-black px-3 py-4
-      border border-grey/20 rounded-xl flex flex-col"
+      border border-grey/20 rounded-xl flex flex-col hover:border-yellow/70
+      duration-300 cursor-pointer group"
     >
       <Image
         src={imgSrc}
         alt={name}
-        className="mb-6 w-full h-52 object-cover rounded-lg
-          cursor-pointer hover:scale-105 duration-200"
+        className="mb-6 w-full h-52 object-cover rounded-lg group-hover:scale-105
+        duration-200"
         width={400}
         height={400}
       />

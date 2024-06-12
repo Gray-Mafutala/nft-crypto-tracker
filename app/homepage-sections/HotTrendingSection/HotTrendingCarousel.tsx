@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
@@ -12,7 +12,6 @@ type Props = {
 
 const HotTrendingCarousel = ({ sliders }: Props) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
 
   const setCurrentPrice = useSlideChangeNFTPricesStore(
     (state) => state.setCurrentPrice
@@ -32,39 +31,12 @@ const HotTrendingCarousel = ({ sliders }: Props) => {
 
   const goToSpecificSlide = (numSlide: number) => setCurrentSlide(numSlide);
 
-  const idTimerList: NodeJS.Timeout[] = [];
-
-  useEffect(() => {
-    if (!autoPlay) {
-      idTimerList.forEach((idTimer) => clearInterval(idTimer));
-      return;
-    }
-
-    idTimerList.push(
-      setInterval(() => {
-        setCurrentSlide((prevSlide) =>
-          prevSlide + 1 < sliders.length ? prevSlide + 1 : 0
-        );
-      }, 2000)
-    );
-
-    console.log("idTimerList:", idTimerList);
-
-    return () => {
-      idTimerList.forEach((idTimer) => clearInterval(idTimer));
-    };
-  }, [autoPlay, sliders]);
-
   useEffect(() => {
     setCurrentPrice(sliders[currentSlide].lastPrice);
   }, [currentSlide]);
 
   return (
-    <div
-      onMouseEnter={() => setAutoPlay(false)}
-      onMouseLeave={() => setAutoPlay(true)}
-      className="relative w-full h-full"
-    >
+    <div className="relative w-full h-full">
       {/* left button */}
       <button
         onClick={goToPrevSlide}

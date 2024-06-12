@@ -32,8 +32,8 @@ export type EthPriceType = {
 };
 
 const getEthereumPrice = async () => {
-  const baseUrlAndEthEndPoint = "https://api.coincap.io/v2/assets/ethereum";
-  const res = await fetch(baseUrlAndEthEndPoint);
+  const baseUrlAndEthEndpoint = "https://api.coincap.io/v2/assets/ethereum";
+  const res = await fetch(baseUrlAndEthEndpoint, { cache: "no-store" });
   const json = (await res.json()) as EthPriceType;
   const ethPriceUsd = parseFloat(json.data.priceUsd).toFixed(4);
   return parseFloat(ethPriceUsd);
@@ -82,7 +82,8 @@ const HotTrendingSection = async () => {
       >
         {/* left content - carousel */}
         <div className="hidden laptop:block aspect-square laptop:w-[420px] desktop:w-[500px]">
-          <HotTrendingCarousel sliders={hotTrendingData} />
+        <HotTrendingCarousel sliders={hotTrendingData} />
+
         </div>
 
         {/* right content - Hot Trending on this week... */}
