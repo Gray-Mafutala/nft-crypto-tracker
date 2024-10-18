@@ -35,13 +35,15 @@ const getEthereumPrice = async () => {
   // const baseUrlAndEthEndpoint = "https://api.coincap.io/v2/assets/ethereum";
   const baseUrlAndEthEndpoint =
     "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD";
-  const res = await fetch(baseUrlAndEthEndpoint, { cache: "no-store" });
+  // const res = await fetch(baseUrlAndEthEndpoint, { cache: "no-store" });
 
-  // const json = (await res?.json()) as EthPriceType;
-  const json = (await res.json()) as { USD: number };
-  // const ethPriceUsd = parseFloat(json.data.priceUsd).toFixed(4);
-  const ethPriceUsd = json.USD.toFixed(4);
-  return parseFloat(ethPriceUsd);
+  // // const json = (await res?.json()) as EthPriceType;
+  // const json = (await res.json()) as { USD: number };
+  // // const ethPriceUsd = parseFloat(json.data.priceUsd).toFixed(4);
+  // const ethPriceUsd = json.USD.toFixed(4);
+
+  // return parseFloat(ethPriceUsd);
+  return 2616.84;
 };
 
 const HotTrendingSection = async () => {
