@@ -12,13 +12,22 @@
   background: #cbfe00;
 }
 
-/* customize scrollbar */
-::-webkit-scrollbar {
+/* customized scrollbar */
+.vertical-custom-scrollbar::-webkit-scrollbar {
   width: 4px;
   background-color: #313d01;
 }
+.vertical-custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #dbff4b;
+  border-radius: 6px;
+  transition: 300ms;
+}
 
-::-webkit-scrollbar-thumb {
+.horizontal-custom-scrollbar::-webkit-scrollbar {
+  height: 4px;
+  background-color: #313d01;
+}
+.horizontal-custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #dbff4b;
   border-radius: 6px;
 }

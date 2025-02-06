@@ -29,7 +29,7 @@ export default function RootLayout({
     >
       <body
         className={cn(
-          "mx-4 mobileM:mx-5 min-h-screen bg-background text-white font-poppins antialiased",
+          "mx-4 mobileM:mx-5 min-h-screen bg-background text-white font-poppins antialiased vertical-custom-scrollbar",
           poppins.variable
         )}
       >
