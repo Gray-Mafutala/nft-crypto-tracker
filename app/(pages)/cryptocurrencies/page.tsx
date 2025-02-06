@@ -178,7 +178,6 @@ const CryptocurrenciesPage = () => {
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          
                           {coin.current_price < 0.0001
                             ? coin.current_price.toLocaleString("en-US", {
                                 style: "currency",
@@ -192,29 +191,47 @@ const CryptocurrenciesPage = () => {
                                 maximumFractionDigits: 2,
                               })}
                         </td>
-                        <td className="px-6 py-4">
+                        <td
+                          className={`px-6 py-4 ${
+                            coin.price_change_percentage_1h_in_currency >= 0
+                              ? "text-green-400"
+                              : "text-red-400"
+                          }`}
+                        >
                           {coin.price_change_percentage_1h_in_currency.toFixed(
                             2
                           )}
                           %
                         </td>
-                        <td className="px-6 py-4">
+                        <td
+                          className={`px-6 py-4 ${
+                            coin.price_change_percentage_24h_in_currency >= 0
+                              ? "text-green-400"
+                              : "text-red-400"
+                          }`}
+                        >
                           {coin.price_change_percentage_24h_in_currency.toFixed(
                             2
                           )}
                           %
                         </td>
-                        <td className="px-6 py-4">
+                        <td
+                          className={`px-6 py-4 ${
+                            coin.price_change_percentage_7d_in_currency >= 0
+                              ? "text-green-400"
+                              : "text-red-400"
+                          }`}
+                        >
                           {coin.price_change_percentage_7d_in_currency.toFixed(
                             2
                           )}
                           %
                         </td>
                         <td className="px-6 py-4">
-                          ${coin.total_volume.toLocaleString()}{" "}
+                          ${coin.total_volume.toLocaleString()}
                         </td>
                         <td className="px-6 py-4">
-                          ${coin.market_cap.toLocaleString()}{" "}
+                          ${coin.market_cap.toLocaleString()}
                         </td>
                       </tr>
                     ))}
