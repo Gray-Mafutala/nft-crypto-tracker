@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/next';
+
 import type { Metadata } from "next";
 import { poppins, techno_chain, tt_firs_neue } from "./fonts";
 import "./globals.css";
@@ -37,6 +39,7 @@ export default function RootLayout({
         <ComingSoonModal />
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

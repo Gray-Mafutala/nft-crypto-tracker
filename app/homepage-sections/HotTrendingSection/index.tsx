@@ -1,12 +1,14 @@
+import path from "path";
 import { promises as fs } from "fs";
 
 import AvatarProfil from "@/app/components/AvatarProfil";
 import nobleCardsLogo from "../../../assets/images/farworld-logo.jpeg";
 import AuctionEndCounter from "./AuctionEndCounter";
 import HotTrendingCarousel from "./HotTrendingCarousel";
-import { NFTChainsName } from "../ExploreOurCollectionsSection";
 import PlaceABidButton from "./PlaceABidButton";
 import CurrentNFTPrice from "./CurrentNFTPrice";
+
+import { NFTChainsName } from "../ExploreOurCollectionsSection";
 
 type NftItem = {
   itemName: string;
@@ -41,10 +43,8 @@ const getEthereumPrice = async () => {
 };
 
 const HotTrendingSection = async () => {
-  const nftsFilePromise = fs.readFile(
-    process.cwd() + "/data/nfts.json",
-    "utf8"
-  );
+  const filePath = path.join(process.cwd(), 'data', 'nfts.json');
+const nftsFilePromise = fs.readFile(filePath, 'utf8');
 
   const ethPriceUsdPromise = getEthereumPrice();
 
